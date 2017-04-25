@@ -5,7 +5,10 @@ $(function() {
   var shapes = ["square", "circle", "triangle"];
   var shades = ["empty", "light", "solid"];
   for (var i = 0; i < cardArray.length; i++) {
-    console.log(cardArray[i].number + ' ' + cardArray[i].shape + ' ' + cardArray[i].color + ' ' + cardArray[i].shade)
+    var $div = $('<div>');
+    $div.attr('id', cardArray[i].number + cardArray[i].shape + cardArray[i].color + cardArray[i].shade);
+    $div.text(cardArray[i].number + ' ' + cardArray[i].shape + ' ' + cardArray[i].color + ' ' + cardArray[i].shade);
+    console.log($div);
   }
 });
 

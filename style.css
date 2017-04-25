@@ -1,0 +1,24 @@
+.card {
+  display: inline-block;
+  height: 200px;
+  width: 100px;
+  background-color: grey;
+}
+.item {
+  margin: 10px;
+  height: 50px;
+  width: 50px;
+  background-color: black;
+}
+.square {
+
+}
+.circle {
+  border-radius: 50%;
+}
+.green {
+  background-color: green;
+}
+.triangle {
+  transform: rotate(45deg);
+}
