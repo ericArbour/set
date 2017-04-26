@@ -6,10 +6,30 @@ $(function() {
   var shades = ["empty", "light", "solid"];
   for (var i = 0; i < cardArray.length; i++) {
     var $div = $('<div>');
+    $div.addClass('card');
     $div.attr('id', cardArray[i].number + cardArray[i].shape + cardArray[i].color + cardArray[i].shade);
-    $div.text(cardArray[i].number + ' ' + cardArray[i].shape + ' ' + cardArray[i].color + ' ' + cardArray[i].shade);
-    console.log($div);
+    var num = "";
+    switch (cardArray[i].number) {
+      case 1:
+        num = "one";
+        break;
+      case 2:
+        num = "two";
+        break;
+      case 3:
+        num = "three";
+        break;
+    }
+    for (var j = 0; j < cardArray[i].number; j++) {
+      var $item = $('<div>');
+      $item.addClass('item ' + num + ' '+ cardArray[i].shape + ' ' + cardArray[i].color + ' ' + cardArray[i].shade);
+      $div.append($item);
+      $('#board').append($div);
+    }
   }
+  $('.card').on('click', function() {
+    console.log(this);
+  });
 });
 
 

@@ -1,14 +1,44 @@
 .card {
+  position: relative;
   display: inline-block;
-  height: 200px;
+  height: 220px;
   width: 100px;
   background-color: grey;
+  margin: 10px;
 }
 .item {
-  margin: 10px;
+  position: relative;
+  margin: 10px auto 10px auto;
   height: 50px;
   width: 50px;
   background-color: black;
+  border: thick solid;
+}
+.one {
+  top: 70px;
+}
+.triangle.one {
+  top: 80px;
+}
+.two {
+  position: relative;
+  top: 35px;
+}
+.triangle.three {
+  position: relative;
+  top: 10px;
+}
+.green {
+  background-color: green;
+  border-color: green;
+}
+.orange {
+  background-color: orange;
+  border-color: orange;
+}
+.purple {
+  background-color: purple;
+  border-color: purple;
 }
 .square {
 
@@ -16,9 +46,22 @@
 .circle {
   border-radius: 50%;
 }
-.green {
-  background-color: green;
-}
 .triangle {
   transform: rotate(45deg);
+  border-radius: 0px 0px 100% 0px;
+}
+.empty {
+  background-color: transparent;
+}
+.light.green {
+  background: linear-gradient(rgba(0,128,0,0.2), rgba(0,128,0,0.5));
+}
+.light.orange {
+  background: linear-gradient(rgba(255,165,0,0.2), rgba(255,165,0,0.5));
+}
+.light.purple {
+  background: linear-gradient(rgba(128,0,128,0.2), rgba(128,0,128,0.5));
+}
+.solid {
+
 }
