@@ -1,10 +1,15 @@
+html {
+  background-color: grey;
+}
 .card {
   position: relative;
   display: inline-block;
   height: 220px;
   width: 100px;
-  background-color: grey;
-  margin: 10px;
+  background-color: darkgrey;
+  margin: 20px;
+  border: thick solid black;
+  border-radius: 10px;
 }
 .item {
   position: relative;
@@ -13,6 +18,9 @@
   width: 50px;
   background-color: black;
   border: thick solid;
+}
+.clicked {
+  background-color: white;
 }
 .one {
   top: 70px;
