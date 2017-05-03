@@ -32,13 +32,18 @@ $(function() {
   }
   var clicks = 0;
   var currentCards = [];
+
   $('.card').on('click', function() {
     $(this).addClass('clicked');
     clicks++;
     currentCards.push($(this).attr('id'));
     if (clicks > 2) {
-      console.log(cardArray[ids.indexOf($(this).attr('id'))]);
       setTimeout(function() {
+        if (checker(cardArray[ids.indexOf(currentCards[0])], cardArray[ids.indexOf(currentCards[1])], cardArray[ids.indexOf(currentCards[2])])) {
+          alert('set!');
+        } else {
+          alert('not a set');
+        }
         for (var i = 0; i < currentCards.length; i++) {
           $('#' + currentCards[i]).removeClass('clicked');
         }
@@ -47,6 +52,12 @@ $(function() {
       }, 80);
     }
   });
+  function checker (obj1, obj2, obj3) {
+    return propCheck(obj1.number, obj2.number, obj3.number) && propCheck(obj1.shape, obj2.shape, obj3.shape) && propCheck(obj1.color, obj2.color, obj3.color) && propCheck(obj1.shade, obj2.shade, obj3.shade);
+  }
+  function propCheck (val1, val2, val3) {
+    return (val1 === val2 && val1 === val3 && val2 === val3) || (val1 !== val2 && val1 !== val3 && val2 !== val3);
+  }
 });
 
 
