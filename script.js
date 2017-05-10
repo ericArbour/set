@@ -10,7 +10,7 @@ $(function() {
   for (var i = 0; i < cardArray.length; i++) {
     //make card dive
     var $div = $('<div>');
-    $div.addClass('card');
+    $div.addClass('card').toggle();
     //make id
     var id = cardArray[i].number + cardArray[i].shape + cardArray[i].color + cardArray[i].shade;
     //add id to id array
@@ -38,32 +38,48 @@ $(function() {
       $div.append($item);
     }
     //add card to board
-    $('#board').append($div).toggle();
+    $('#board').append($div);
   }
+  //get list of initial random 12 card ids
   while (played.length < 12) {
     var randId = ids[Math.floor(Math.random() * ids.length)];
     if (played.indexOf(randId) < 0) {
       played.push(randId);
     }
   }
+  //display initial 12
   for (var i = 0; i < played.length; i++) {
     $('#' + played[i]).toggle();
   }
-  console.log(played);
   var clicks = 0;
   var currentCards = [];
-
+  //click a card
   $('.card').on('click', function() {
     $(this).addClass('clicked');
     clicks++;
     currentCards.push($(this).attr('id'));
     if (clicks > 2) {
       setTimeout(function() {
+        //if the third click makes a set
         if (checker(cardArray[ids.indexOf(currentCards[0])], cardArray[ids.indexOf(currentCards[1])], cardArray[ids.indexOf(currentCards[2])])) {
           alert('set!');
           for (var i = 0; i < currentCards.length; i++) {
-            $('#' + currentCards[i]).removeClass('clicked').hide();
+            $('#' + currentCards[i]).removeClass('clicked').toggle();
           }
+          //TODO: figure out why cards are displaying in order even though they're random
+          //TODO: fix this code to add three more cards after set is made and cards are removed
+          //get list of initial random 12 card ids
+          // while (played.length < 12) {
+          //   var randId = ids[Math.floor(Math.random() * ids.length)];
+          //   if (played.indexOf(randId) < 0) {
+          //     played.push(randId);
+          //   }
+          // }
+          //display initial 12
+          // for (var i = 0; i < played.length; i++) {
+          //   $('#' + played[i]).toggle();
+          // }
+          //if the third click isn't a set
         } else {
           alert('not a set');
           for (var i = 0; i < currentCards.length; i++) {
