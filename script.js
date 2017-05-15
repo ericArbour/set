@@ -12,17 +12,16 @@ $(function() {
     randomArray.push(cardArray[rand]);
     cardArray.splice(rand, 1);
   }
-  //empty array to hold ids
+  //empty array to hold ids for the purpose of easily accessing the objects in the randomArray by id
   var ids = [];
-  //empty array to hold played cards
+  //empty array to be filled with ids of cards currently on the board
   var played = [];
-
+  //empty array to hold card jquery objects that have yet to be played
+  var deck = [];
   //initializer for each card object in array
   for (var i = 0; i < randomArray.length; i++) {
     //make card div
-    var $div = $('<div>');
-    //make it hidden
-    $div.addClass('card').toggle();
+    var $div = $('<div>').addClass('card');
     //make id
     var id = randomArray[i].number + randomArray[i].shape + randomArray[i].color + randomArray[i].shade;
     //add id to id array
@@ -49,23 +48,50 @@ $(function() {
       $item.addClass('item ' + num + ' '+ randomArray[i].shape + ' ' + randomArray[i].color + ' ' + randomArray[i].shade);
       $div.append($item);
     }
-    //add card to board
-    $('#board').append($div);
+    //add card to deck
+    deck.push($div);
   }
+  var workingIds = ids.slice(0);
   //get list of initial random 12 card ids
   while (played.length < 12) {
-    var randId = ids[Math.floor(Math.random() * ids.length)];
+    //get random id from ids array
+    var randId = workingIds[Math.floor(Math.random() * workingIds.length)];
+    //if id isn't yet in the played array, add it
     if (played.indexOf(randId) < 0) {
       played.push(randId);
     }
   }
-  //display initial 12
+  //display initial 12 from deck to board
   for (var i = 0; i < played.length; i++) {
-    $('#' + played[i]).toggle();
+    //add card based on played id to board
+    $('#board').append(deck[workingIds.indexOf(played[i])]);
+    //remove displayed card on board from deck
+    deck.splice(workingIds.indexOf(played[i]), 1);
+    workingIds.splice(workingIds.indexOf(played[i]), 1);
   }
+  //count number of cards currently clicked
   var clicks = 0;
+  //cards currently clicked
   var currentCards = [];
   //click a card
+  $('#addMore').on('click', function() {
+    //get three new ids
+    var currLength = played.length;
+    while (played.length < currLength + 3) {
+      var randId = workingIds[Math.floor(Math.random() * workingIds.length)];
+      if (played.indexOf(randId) < 0) {
+        played.push(randId);
+      }
+    }
+    //display three new cards
+    for (var i = currLength; i < played.length; i++) {
+      //add card based on played id to board
+      $('#board').append(deck[workingIds.indexOf(played[i])]);
+      //remove displayed card on board from deck
+      deck.splice(workingIds.indexOf(played[i]), 1);
+      workingIds.splice(workingIds.indexOf(played[i]), 1);
+    }
+  });
   $('.card').on('click', function() {
     if (currentCards.indexOf($(this).attr('id')) < 0) {
       $(this).addClass('clicked');
@@ -73,23 +99,33 @@ $(function() {
       currentCards.push($(this).attr('id'));
       if (clicks > 2) {
         setTimeout(function() {
+          console.log(ids.length);
           //if the third click makes a set
+          // console.log(currentCards[0]);
+          // console.log(ids);
+          // console.log(ids.indexOf(currentCards[0]));
+          // console.log(randomArray[ids.indexOf(currentCards[1])]);
+          // console.log(randomArray[ids.indexOf(currentCards[2])]);
           if (checker(randomArray[ids.indexOf(currentCards[0])], randomArray[ids.indexOf(currentCards[1])], randomArray[ids.indexOf(currentCards[2])])) {
             alert('set!');
             for (var i = 0; i < currentCards.length; i++) {
-              $('#' + currentCards[i]).removeClass('clicked').toggle();
+              $('#' + currentCards[i]).remove();
             }
             var currLength = played.length;
             //get three new ids
             while (played.length < currLength + 3) {
-              var randId = ids[Math.floor(Math.random() * ids.length)];
+              var randId = workingIds[Math.floor(Math.random() * workingIds.length)];
               if (played.indexOf(randId) < 0) {
                 played.push(randId);
               }
             }
             //display three new cards
             for (var i = currLength; i < played.length; i++) {
-              $('#' + played[i]).toggle();
+              //add card based on played id to board
+              $('#board').append(deck[workingIds.indexOf(played[i])]);
+              //remove displayed card on board from deck
+              deck.splice(workingIds.indexOf(played[i]), 1);
+              workingIds.splice(workingIds.indexOf(played[i]), 1);
             }
             //if it's not a set
           } else {
